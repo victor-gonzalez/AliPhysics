@@ -86,6 +86,8 @@ public:
   void                        FinalizeProcess();
 
 private:
+  void                        ProcessLikeSignSingles(Int_t);
+  void                        ProcessUnlikeSignSingles();
   void                        ProcessLikeSignPairs(Int_t bank);
   void                        ProcessNotHalfSymmLikeSignPairs(Int_t bank);
   void                        FlagConversionsAndResonances();
