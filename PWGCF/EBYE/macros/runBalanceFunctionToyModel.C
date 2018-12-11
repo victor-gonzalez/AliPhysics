@@ -2,6 +2,9 @@
 Double_t nTotalMultiplicityMean = 100.;
 Double_t nTotalMultiplicitySigma = 10.;
 
+//=========Eta production window======//
+Double_t gConstantEta = 2.0;
+
 //=========Net charge=========//
 Double_t nNetChargeMean = 0.0;
 Double_t nNetChargeSigma = 3.0;
@@ -98,10 +101,10 @@ void runBalanceFunctionToyModel(Int_t nEvents = 10,
 
   //configure the bf objects
   gROOT->LoadMacro("$ALICE_PHYSICS/PWGCF/EBYE/macros/configBalanceFunctionPsiAnalysis.C");
-  AliBalancePsi *bf  = GetBalanceFunctionObject("MC","",0,100,kRunShuffling,bResonancesCut,bHBTcut,bConversionCut,bMomentumDifferenceCut,fArgEventClass,deltaEtaMax,bVertexBinning);
+  AliBalancePsi *bf  = GetBalanceFunctionObject("MC","",0,100,kRunShuffling,bResonancesCut,bHBTcut,0.02,bConversionCut,0.04,bMomentumDifferenceCut,0.0,fArgEventClass,deltaEtaMax,bVertexBinning);
   AliBalancePsi *bfm = 0x0;
   if(kRunMixing) 
-    bfm = GetBalanceFunctionObject("MC","",0,100,kRunShuffling,bResonancesCut,bHBTcut,bConversionCut,bMomentumDifferenceCut,fArgEventClass,deltaEtaMax,bVertexBinning);
+    bfm = GetBalanceFunctionObject("MC","",0,100,kRunShuffling,bResonancesCut,bHBTcut,0.02,bConversionCut,0.04,bMomentumDifferenceCut,0.0,fArgEventClass,deltaEtaMax,bVertexBinning);
   
   //Configure the toy model object
   AliAnalysisTaskToyModel *toyModelAnalysis = new AliAnalysisTaskToyModel();
@@ -112,6 +115,7 @@ void runBalanceFunctionToyModel(Int_t nEvents = 10,
   toyModelAnalysis->SetTotalMultiplicity(nTotalMultiplicityMean,nTotalMultiplicitySigma);
   toyModelAnalysis->SetNetCharge(nNetChargeMean,nNetChargeSigma);
   toyModelAnalysis->SetKinematicsCutsMC(gPtMin,gPtMax,gEtaMin,gEtaMax);
+  toyModelAnalysis->SetConstantEta(gConstantEta);
 
   if(kUseAllCharges) {
     toyModelAnalysis->SetSpectraTemperatureForAllCharges(gAllChargesTemperature);
